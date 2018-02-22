@@ -14,7 +14,7 @@
     "express-useragent": "^1.0.12",
     "hyperscript": "^2.0.2",
     "jade": "^1.11.0",
-    "mongodb": "^3.0.2",
+    "mongodb": "^2.2.33",
     "querystring": "^0.2.0",
     "stylus": "^0.54.5",
     "through2-map": "^3.0.0"
