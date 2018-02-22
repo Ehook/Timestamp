@@ -3,23 +3,22 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
-var app = module.exports = express();
+var app = express();
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
 
-var url = '/new/:url(*)';
+//var url = '/new/:url(*)';
 var appurl = 'localhost:8000/'
 var urlrequest = 0;
 
 MongoClient.connect('mongodb://localhost:27017/urlshort', function(err, db){
-  app.get(url ,function(request, response, next){
-    var initurl = request.params.url
+  app.get('/new/:url(*)' ,function(req, res){
+    var initurl = req.params.url
     urlrequest++
     //var newurllength = new Array(initurl);
     var newurl = appurl + (urlrequest * 2 + 1000);
-    var result = newurl.link(initurl)
-
+    //var result = newurl.link(initurl)
     db.collection('urlshort').insert({
         "longUrl": initurl,
         "shortUrl": newurl,
@@ -39,10 +38,10 @@ MongoClient.connect('mongodb://localhost:27017/urlshort', function(err, db){
     }*/
   })
 })
-app.get('/:newurl', function(request, response){
-  var shortenedurl = request.params.newurl;
+app.get('/:newurl', function(req, res){
+  var shortenedurl = req.params.newurl;
   if(shortenedurl.indexOf("http") == -1){shortenedurl = "http://"+shortenedurl}
-  request.redirect(shortenedurl);
+  req.redirect(shortenedurl);
 })
 
 app.listen(8000, function(){
