@@ -1,0 +1,39 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="/">Main</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="/profile">Profile</a>
+  </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="/register">Register</a>
+    </li>
+      <li class="nav-item">
+        <a class="nav-link active show" data-toggle="tab" href="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="/polls">Polls</a>
+      </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade" id="main">
+  </div>
+  <div class="tab-pane fade" id="profile">
+  </div>
+  <div class="tab-pane fade active show" id="login">
+
+    <h4 ng-if="vm.error">{{vm.error}}</h4>
+    <br>
+    <input type="text" ng-model="vm.user.name" class="form-control" placeholder="Name">
+    <br>
+    <input type="password" ng-model="vm.user.password" placeholder="Password" class="form-control">
+    <br>
+    <button class="btn btn-success" ng-click="vm.login()" ng-disabled="!vm.user.name || !vm.user.password">Login</button>
+    <hr>
+  </div>
+  <div class="tab-pane fade" id="register">
+  </div>
+  </div>
+  <div class="tab-pane fade" id="polls">
+  </div>
+</div>
