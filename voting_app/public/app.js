@@ -82,8 +82,15 @@
 
   function LoginController($location, $window, $http) {
     const vm = this;
+    const fieldset = document.querySelector('fieldset');
     vm.title = 'LoginController';
     vm.error = '';
+    if (!$window.localStorage.token === true) {
+
+    } else {
+      vm.error = 'Already logged in, go to the polls and vote!';
+      fieldset.disabled = true;
+    }
     vm.login = function () {
       if (vm.user) {
         $http.post('/api/login', vm.user)
@@ -102,8 +109,15 @@
 
   function RegisterController($location, $window, $http) {
     const vm = this;
+    const fieldset = document.querySelector('fieldset');
     vm.title = 'RegisterController';
     vm.error = '';
+    if (!$window.localStorage.token === true) {
+
+    } else {
+      vm.error = 'Already registered, go to the polls and vote!';
+      fieldset.disabled = true;
+    }
     vm.register = function () {
       if (!vm.user) {
         console.log('Invalid Credentials');
@@ -141,12 +155,16 @@
     const vm = this;
     let user;
     let id;
+    vm.error = '';
+    vm.error1 = '';
     if (!$window.localStorage.token === true) {
       user = 'guest';
       id = '13245678';
+      vm.error = "You won't be able to vote until you login.";
     } else {
       user = jwtHelper.decodeToken($window.localStorage.token);
       id = user.data._id;
+      vm.error1 = 'Vote on any existing polls or Create your own.';
     }
     vm.title = 'PollsController';
     vm.polls = [];
@@ -169,6 +187,14 @@
       $http.get('/api/polls')
         .then((response) => {
           vm.polls = response.data;
+          let i;
+          for (i = 0; i < vm.polls.length; i += 1) {
+            if (user.data._id === vm.polls[i].user) {
+              vm.removePoll = 'Remove button created';
+            } else if (!user.data._id === true) {
+
+            }
+          }
         }, (err) => {
           console.log(err);
         });
@@ -212,13 +238,18 @@
     const fieldset = document.querySelector('fieldset');
     let user;
     let id;
+    vm.error = '';
+    vm.error1 = '';
+    vm.removePoll = '';
     if (!$window.localStorage.token === true) {
       user = 'guest';
       id = '13245678';
+      vm.error = 'Please log in to vote.';
       fieldset.disabled = true;
     } else {
       user = jwtHelper.decodeToken($window.localStorage.token);
       id = user.data._id;
+      vm.error1 = 'Select an option or Create your own.';
     }
     vm.pollList = [];
     vm.pollpage = {
@@ -248,7 +279,11 @@
               continue;
             }
             vm.pollpage = vm.pollList[i];
-            break;
+          }
+          if (user.data._id === vm.pollpage.user) {
+            vm.removePoll = 'Remove button created';
+          } else if (!user.data._id === true) {
+
           }
         });
     };

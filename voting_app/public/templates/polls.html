@@ -8,6 +8,11 @@
   <li class="nav-item">
     <a class="nav-link active show" data-toggle="tab" href="/polls">Polls</a>
   </li>
+  <div ng-if="vm.error">
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="/login">Login</a>
+    </liv>
+  </div>
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade" id="main">
@@ -16,6 +21,8 @@
   </div>
       <div class="tab-pane fade active show" id="polls">
         <br>
+        <h4 class="text-warning" ng-if="vm.error">{{vm.error}}</h4>
+        <h4 class="text-success" ng-if="vm.error1">{{vm.error1}}</h4>
         <input type="text" ng-model="vm.poll.name" placeholder="Name of Poll">
         <hr>
         <input type="text" ng-model="vm.poll.options[$index].name" ng-repeat="option in vm.poll.options" placeholder="Option name" class="form-control" style="padding: 10px;">
@@ -33,9 +40,14 @@
               </li>
             </ul>
             <br>
-            <li ng-if="">
+            <div ng-if="vm.removePoll">
             <button class="btn btn-danger" name="RemovePoll">Remove Poll</button>
-            </li>
+          </div>
           </li>
         </ul>
       </div>
+      <div ng-if="vm.error">
+        <div class="tab-pane fade" id="login">
+        </div>
+      </div>
+    </div>

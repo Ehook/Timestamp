@@ -22,14 +22,18 @@
   </div>
   <div class="tab-pane fade active show" id="login">
 
-    <h4 ng-if="vm.error">{{vm.error}}</h4>
+    <h4 class="text-success" ng-if="vm.error">{{vm.error}}</h4>
     <br>
-    <input type="text" ng-model="vm.user.name" class="form-control" placeholder="Name">
-    <br>
-    <input type="password" ng-model="vm.user.password" placeholder="Password" class="form-control">
-    <br>
-    <button class="btn btn-success" ng-click="vm.login()" ng-disabled="!vm.user.name || !vm.user.password">Login</button>
-    <hr>
+    <fieldset>
+      <form>
+        <input type="text" ng-model="vm.user.name" class="form-control" placeholder="Name">
+        <br>
+        <input type="password" ng-model="vm.user.password" placeholder="Password" class="form-control">
+        <br>
+        <button class="btn btn-success" ng-click="vm.login()" ng-disabled="!vm.user.name || !vm.user.password">Login</button>
+        <hr>
+      </form>
+  </fieldset>
   </div>
   <div class="tab-pane fade" id="register">
   </div>
