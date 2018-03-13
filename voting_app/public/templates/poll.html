@@ -38,7 +38,7 @@
                </li>
                <br>
                <div ng-if="vm.removePoll">
-                 <button class="btn btn-danger" name="RemovePoll">Remove Poll</button>
+                 <button class="btn btn-danger" name="RemovePoll" ng-click="vm.removepollfromlist();" id="removepoll" value="{{vm.pollpage._id}}">Remove Poll</button>
                </div>
                <hr>
                <div id="NewOption">

@@ -5,6 +5,11 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Poll = require('../models/polls');
+// Remove Poll from list and update
+router.put('/polls', (request, response) => {
+  Poll.deleteOne({ _id: request.body._id })
+    .then(result => response.status(200).send(result));
+});
 // Update Poll Vote count
 router.put('/polls/:id', (req, res) => {
   Poll.findByIdAndUpdate(
@@ -29,13 +34,12 @@ router.get('/polls/:id', (request, response) => {
 // Get all Polls
 router.get('/polls', (request, response) => {
   Poll.find({}, (err, polls) => {
-    if (err) {
-      return response.status(400).send(err);
-    }
     if (polls.length < 1) {
       return response.status(400).send('No polls here yet!');
     }
-    // console.log(polls);
+    if (err) {
+      return response.status(400).send('Computers are stupid.');
+    }
     return response.status(200).send(polls);
   });
 });

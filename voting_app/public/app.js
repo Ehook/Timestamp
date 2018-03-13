@@ -199,6 +199,26 @@
           console.log(err);
         });
     };
+    vm.updatePollList = function () {
+      $http.put('/api/polls', vm.removingthispoll)
+        .then((response) => {
+          location.reload();
+          vm.polls = [];
+        }, (err) => {
+          console.log(err);
+        });
+    };
+    vm.removepollfromlist = function () {
+      const x = document.getElementById('removepoll');
+      let i;
+      for (i = 0; i < vm.polls.length; i += 1) {
+        if (x.value === vm.polls[i]._id) {
+          vm.removingthispoll = vm.polls[i];
+          vm.updatePollList();
+          break;
+        }
+      }
+    };
     vm.getAllPolls();
     vm.addPoll = function () {
       if (!vm.poll) {
@@ -207,26 +227,9 @@
       }
       $http.post('/api/polls', vm.poll)
         .then((response) => {
-          vm.poll = {
-            name: '',
-            options: [],
-            user: id,
-          };
-          vm.poll.options = [{
-            name: '',
-            votes: 0,
-          }];
+          console.log(response);
           vm.getAllPolls();
         }, (err) => {
-          vm.poll = {
-            name: '',
-            options: [],
-            user: id,
-          };
-          vm.poll.options = [{
-            name: '',
-            votes: 0,
-          }];
           console.log(err);
         });
     };
@@ -288,28 +291,27 @@
         });
     };
 
+    vm.updatePollList = function () {
+      $http.put('/api/polls', vm.removingthispoll)
+        .then((response) => {
+          $location.path('/polls');
+        }, (err) => {
+          console.log(err);
+        });
+    };
+    vm.removepollfromlist = function () {
+      const x = document.getElementById('removepoll');
+      if (x.value === vm.pollpage._id) {
+        vm.removingthispoll = vm.pollpage;
+        vm.updatePollList();
+      }
+    };
     vm.updatePollOption = function () {
       $http.put(`/api/polls/${vm.uniqueID}`, vm.pollpage)
         .then((response) => {
-          vm.pollpage = {
-            name: '',
-            options: [],
-            user: id,
-          };
-          vm.pollpage.options = [{
-            name: '',
-            votes: 0,
-          }];
+          console.log(response);
         }, (err) => {
-          vm.pollpage = {
-            name: '',
-            options: [],
-            user: id,
-          };
-          vm.pollpage.options = [{
-            name: '',
-            votes: 0,
-          }];
+          console.log(err);
         });
       location.reload();
     };
@@ -332,25 +334,9 @@
       vm.updatePollData = function () {
         $http.put(`/api/polls/${vm.uniqueID}`, vm.pollpage)
           .then((response) => {
-            vm.pollpage = {
-              name: '',
-              options: [],
-              user: id,
-            };
-            vm.pollpage.options = [{
-              name: '',
-              votes: 0,
-            }];
+            console.log(response);
           }, (err) => {
-            vm.pollpage = {
-              name: '',
-              options: [],
-              user: id,
-            };
-            vm.pollpage.options = [{
-              name: '',
-              votes: 0,
-            }];
+            console.log(err);
           });
       };
       for (i = 0; i < vm.pollpage.options.length; i += 1) {
