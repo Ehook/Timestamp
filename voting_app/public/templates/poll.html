@@ -8,9 +8,14 @@
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="/polls">Polls</a>
   </li>
-    <li class="nav-item">
+  <li class="nav-item">
       <a class="nav-link active show" data-toggle="tab">Poll</a>
-    </li>
+  </li>
+  <div ng-if="vm.error">
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="/login">Login</a>
+  </liv>
+  </div>
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade" id="main">
@@ -21,6 +26,8 @@
   </div>
     <div class="tab-pane fade active show" id="poll">
       <br>
+      <h4 class="text-danger" ng-if="vm.error">{{vm.error}}</h4>
+      <h4 class="text-success" ng-if="vm.error1">{{vm.error1}}</h4>
       <fieldset>
         <legend>{{vm.pollpage.name}}</legend>
             <form>
@@ -29,6 +36,10 @@
                <input type="radio" name="radioname" id="{{option._id}}" ng-click="vm.getCheckedboxes();"/>
                <br>
                </li>
+               <br>
+               <div ng-if="vm.removePoll">
+                 <button class="btn btn-danger" name="RemovePoll" ng-click="vm.removepollfromlist();" id="removepoll" value="{{vm.pollpage._id}}">Remove Poll</button>
+               </div>
                <hr>
                <div id="NewOption">
               <input type="text" ng-model="vm.pollpage.options[$index].name"  placeholder="Option name" class="form-control" style="padding: 10px;">
@@ -39,5 +50,9 @@
                 <button class="btn btn-success" ng-click="vm.likeButton();" name="Submit" id="{{option._id}}">Submit</button>
              </form>
       </fieldset>
+    </div>
+    <div ng-if="vm.error">
+      <div class="tab-pane fade" id="login">
+      </div>
     </div>
 </div>
